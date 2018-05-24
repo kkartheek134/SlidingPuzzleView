@@ -1,31 +1,141 @@
 apply plugin: 'com.android.library'
 
+ext {
+    versionCode = rootProject.ext.versionCode
+    versionName = rootProject.ext.versionName
+
+    groupId = 'com.luxiliu'
+    artifactId = 'slidingpuzzleview'
+
+    packageRepo = 'maven'
+    packageName = 'SlidingPuzzleView'
+    packageDescription = 'SlidingPuzzleView is a custom view for sliding puzzle games'
+    packageWebsite = 'https://github.com/luxiliu/SlidingPuzzleView'
+    packageIssueTracker = 'https://github.com/luxiliu/SlidingPuzzleView/issues'
+    packageVCS = 'https://github.com/luxiliu/SlidingPuzzleView.git'
+    packageLicenses = ["Apache-2.0"]
+    packageLicenseName = 'The Apache License, Version 2.0'
+    packageLicenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+}
+
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.jakewharton.timber:timber:4.7.0'
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+}
+
+// Maven
+apply plugin: 'com.github.dcendents.android-maven'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name project.ext.packageName
+            description project.ext.packageDescription
+            url project.ext.packageWebsite
+            inceptionYear '2017'
+
+            packaging 'aar'
+            groupId project.ext.groupId
+            artifactId project.ext.artifactId
+            version project.ext.versionName
+
+            licenses {
+                license {
+                    name project.ext.packageLicenseName
+                    url project.ext.packageLicenseUrl
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection project.ext.packageVCS
+                developerConnection project.ext.packageVCS
+                url project.ext.packageWebsite
+            }
+            developers {
+                developer {
+                    name 'Luxi Liu'
+                    email 'luxi.liu@gmail.com'
+                }
+            }
+        }
+    }
+}
+
+// Bintray
+apply plugin: 'com.jfrog.bintray'
+
+version = versionName
+group = groupId
+
+if (project.hasProperty("android")) { // Android libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+} else { // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+// Bintray
+bintray {
+    user = BINTRAY_USER
+    key = BINTRAY_APIKEY
+
+    configurations = ['archives']
+    pkg {
+        repo = project.ext.packageRepo
+        name = project.ext.packageName
+        desc = project.ext.packageDescription
+        websiteUrl = project.ext.packageWebsite
+        issueTrackerUrl = project.ext.packageIssueTracker
+        vcsUrl = project.ext.packageVCS
+        licenses = project.ext.packageLicenses
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            gpg {
+                sign = true
+                passphrase = BINTRAY_GPS_PASSWORD
+            }
+        }
+    }
 }

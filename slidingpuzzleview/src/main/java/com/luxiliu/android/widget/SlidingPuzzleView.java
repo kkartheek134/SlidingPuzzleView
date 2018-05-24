@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import timber.log.Timber;
-
 
 public class SlidingPuzzleView extends View implements GestureDetector.OnGestureListener {
     private static final int MIN_NUM_ROWS = 2;
@@ -166,10 +164,6 @@ public class SlidingPuzzleView extends View implements GestureDetector.OnGesture
     }
 
     private void init(Context context, AttributeSet attributeSet) {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
-
         setClickable(true);
 
         // Use GestureDetectorCompat to handle gesture events
