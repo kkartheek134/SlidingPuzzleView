@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SlidingPuzzleView">
+        <attr name="src" format="reference|color" />
+        <attr name="numRows" format="integer" min="2" />
+        <attr name="numColumns" format="integer" min="2" />
+    </declare-styleable>
+</resources>
