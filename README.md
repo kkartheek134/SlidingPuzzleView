@@ -4,6 +4,8 @@ SlidingPuzzleView is a custom view for sliding puzzle games
 
 ![](https://user-images.githubusercontent.com/22950288/40486016-6d705968-5fa3-11e8-93a9-e072a5aeec96.gif)
 
+[![Build Status](https://travis-ci.org/luxiliu/SlidingPuzzleView.svg?branch=develop)](https://travis-ci.org/luxiliu/SlidingPuzzleView)
+
 License
 --------
     Copyright 2016 Dardle Pty Ltd.
