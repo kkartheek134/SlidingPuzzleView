@@ -1,1 +1,1 @@
-include ':app', ':slidingpuzzleview'
+include ':sample', ':slidingpuzzleview'
