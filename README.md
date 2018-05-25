@@ -7,6 +7,13 @@ SlidingPuzzleView is a custom view for sliding puzzle games
 [![Build Status](https://travis-ci.org/luxiliu/SlidingPuzzleView.svg?branch=develop)](https://travis-ci.org/luxiliu/SlidingPuzzleView)
 [![Download](https://api.bintray.com/packages/luxiliu/maven/SlidingPuzzleView/images/download.svg)](https://bintray.com/luxiliu/maven/SlidingPuzzleView/_latestVersion)
 
+Download
+--------
+Download via Gradle:
+```groovy
+compile 'com.luxiliu.android.widget:slidingpuzzleview:0.1.0'
+```
+
 License
 --------
     Copyright 2016 Dardle Pty Ltd.
