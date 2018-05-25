@@ -11,7 +11,7 @@ Download
 --------
 Download via Gradle:
 ```groovy
-compile 'com.luxiliu.android.widget:slidingpuzzleview:0.1.0'
+compile 'com.luxiliu:slidingpuzzleview:0.1.0'
 ```
 
 License
