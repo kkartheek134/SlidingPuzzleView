@@ -364,6 +364,10 @@ public class SlidingPuzzleView extends View implements GestureDetector.OnGesture
             // Update blank tile
             mTiles[selectedTileRow][selectedTileColumn] = blankTile;
             mEmptyPosition = position;
+            
+            if(isSolved()){
+                Toast.makeText(getContext(), "Solved", Toast.LENGTH_SHORT).show();
+            }
 
             // Redraw after movement
             invalidate();
